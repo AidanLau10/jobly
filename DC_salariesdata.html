@@ -75,11 +75,11 @@ input[type="text"], select {
         formData.forEach((value, key) => {
             formDataObject[key] = value;
         });
-        console.log(formDataObject); // You can do further processing with the form data here
-        // Example: send form data to server, perform calculations, etc.
+        // Redirect to the recommendation page with survey responses as query parameters
+        const queryParams = new URLSearchParams(formData).toString();
+        window.location.href = `recommendation.html?${queryParams}`;
     });
 </script>
 
 </body>
 </html>
-
