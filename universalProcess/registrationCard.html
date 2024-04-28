@@ -1,0 +1,100 @@
+---
+layout: base
+permalink: /freelancerRegistration/
+---
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+/* all css is made by ChatGPT */
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            margin: auto;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .title {
+            color: grey;
+            font-size: 18px;
+        }
+
+        button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+
+        button:hover, a:hover {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center">Freelancer Registration Card</h2>
+    <h3 style="text-align:center">To get your freelancer profile created, fill out your name and password. You will be given a user id that you can log in with.</h3>
+    <div class="card">
+        <img src="../images/user.png" alt="User" style="width:100%">
+        <p class="registrationInputs"><input placeholder="Name" type="text" name="name" id="name" required></p>
+        <p class="registrationInputs"><input placeholder="Password" type="password" name="password" id="password" required></p>
+        <button onclick="create_User()">Create</button>
+    </div>
+</body>
+<script>
+    function create_User() {
+        // get name and password from user input
+        const name = document.getElementById("name").value;
+        const password = document.getElementById("password").value;
+
+        // body of request 
+        const userData = {
+            name: name,
+            password: password,
+            status: "Freelancer"
+        };
+
+        // prepare request options of request
+        const requestOptions = {
+            method: 'POST',
+            headers: new Headers({'content-type': 'application/json'}),
+            body: JSON.stringify(userData), // Convert data object to JSON string
+            mode: 'cors',
+        };
+
+        // fetch url
+        const url = 'http://127.0.0.1:8064/api/users/';
+        // fetch that gives user their userid if successful
+        fetch(url, requestOptions)
+            .then(response => {
+                // handles error from backend 
+                if (response.status !== 200) {
+                    const errorMsg = 'Database response error: ' + response.status;
+                    console.log(errorMsg);
+                    return;
+                }
+
+               
+                response.json().then(data => {
+                    if (data !== null) {
+                        console.log(data)
+                        document.cookie = "auth="+data;
+                        window.location.href = '{{site.baseurl}}/userId?userId=' + data;
+                    }
+                });
+            })
+            .catch(error => {
+                // handles error from fetch
+                console.error('Fetch error:', error);
+            });
+    }
+</script>
+</html>

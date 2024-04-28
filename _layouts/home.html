@@ -76,7 +76,7 @@ layout: base
             // Async fetch API call to the database to create a new user
             fetch(url, requestOptions)
                 .then(response => {
-                    // Handle server response
+                    // handles error from backend 
                     if (response.status !== 200) {
                         const errorMsg = 'Database response error: ' + response.status;
                         console.log(errorMsg);
@@ -84,7 +84,7 @@ layout: base
                         window.location.href = '{{site.baseurl}}/unsuccessfullogin'
                     }
                     console.log(response)
-                    // Response contains valid result
+                    
                     response.json().then(data => {
                         if (data !== null) {
                             console.log(data)
@@ -94,7 +94,7 @@ layout: base
                     });
                 })
                 .catch(error => {
-                    // Handle fetch errors
+                    // handles error from fetch
                     console.error('Fetch error:', error);
                 });
         }
@@ -114,17 +114,18 @@ layout: base
 
 
 <style>
-    /* Style for the container div */
+/* all css is made by ChatGPT */
+    
     .usertype-container {
         text-align: center;
-        margin: 20px auto; /* Center align and provide top margin */
+        margin: 20px auto; 
         background-color: #b8b8b16c;
         padding: 20px;
         border-radius: 10px;
-        max-width: 800px; /* Set maximum width */
+        max-width: 800px; 
     }
 
-    /* Style for the title */
+  
     .usertype-title {
         font-size: 28px;
         margin-bottom: 20px;
@@ -136,7 +137,7 @@ layout: base
         color: black;
     }
 
-    /* Style for the buttons */
+
     .usertype-buttons {
         display: flex;
         justify-content: center;
@@ -159,7 +160,7 @@ layout: base
         background-color: #0056b3;
     }
 
-    /* Style for the 'Or' text */
+  
     .usertype-or {
         font-size: 20px;
         margin: 0 10px;

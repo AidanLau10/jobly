@@ -1,7 +1,7 @@
 ---
 layout: base
 permalink: /planning/
-title: Planning
+
 ---
 
 - Here is the planning process and design of our CPT project

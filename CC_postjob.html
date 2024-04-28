@@ -9,13 +9,14 @@ title: Post a Job
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
-            /* CSS styles */
+/* all css is made by ChatGPT */
+           
             .centertext {
                 text-align: center;
             }
     
             .form-table {
-                margin: 0 auto; /* Center the table */
+                margin: 0 auto;
             }
     
             .form-table th, .form-table td {
@@ -24,11 +25,11 @@ title: Post a Job
             }
     
             .textarea {
-                width: 100%; /* Set the width to 100% of the parent container */
-                resize: vertical; /* Allow vertical resizing */
+                width: 100%; 
+                resize: vertical; 
             }
     
-            /* Additional styling if needed */
+        
             .post-job-button {
                 display: block;
                 margin: 0 auto;
@@ -64,8 +65,17 @@ title: Post a Job
                     <td><textarea id="description" name="description" rows="4" required></textarea></td>
                 </tr>
                 <tr>
-                    <td><label for="qualification">Job Qualifications:</label></td>
-                    <td><textarea id="qualification" name="qualification" rows="4" required></textarea></td>
+                    <td><label for="qualification">Qualification</label></td>
+                    
+    
+                    <td><select id="qualification">
+                        <option value="PhD">Bachelors</option>
+                        <option value="Masters">Masters</option>
+                        <option value="Bachelors">Bachelors</option>
+                        <option value="Associates">Associates</option>
+                     
+                
+                    </select></td>
                 </tr>
                 <tr>
                     <td><label for="pay">Hourly Pay:</label></td>
@@ -82,7 +92,7 @@ title: Post a Job
                             <option value="Marketing">Marketing</option>
                             <option value="Web">Web</option>
     
-                            <!-- Add more options as needed -->
+                          
                         </select>
                     </td>
                 </tr>
@@ -93,7 +103,7 @@ title: Post a Job
                             <option value="null"></option>
                             <option value="Onsite">Onsite</option>
                             <option value="Remote">Remote</option>
-                            <!-- Add more options as needed -->
+                    
                         </select>
                     </td>
                 </tr>
@@ -105,19 +115,20 @@ title: Post a Job
             </table>
    
             <script>
-
+                // fetch url
                 const url = "http://127.0.0.1:8064/api/users/";
+                 // prepare request options of request
                 const headers = {
-                  method: 'GET', // *GET, POST, PUT, DELETE, etc.
-                  mode: 'cors', // no-cors, *cors, same-origin
-                  cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
-                  credentials: 'include', // include, *same-origin, omit
+                  method: 'GET', 
+                  mode: 'cors',
+                  cache: 'default', 
+                  credentials: 'include', 
                   headers: {
                     'Content-Type': 'application/json'
-                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                   
                   },
                 };
-                // fetch the API
+                // fetch that will redirect user to a page that tells them to create the proper employer account if the response isnt 200
                 fetch(url, headers)
                   .then(response => {
                     console.log(response)
@@ -140,12 +151,12 @@ title: Post a Job
                     console.error(err);
          
                   });
-                // ...
+               
                 </script>
                  
 
     <script>
-
+        // function that retrieves the userid cookie out of all the cookies stored in the Cookies tab of the browser
         function getCookie(cname) {
             var name = cname + "=";
             var decodedCookie = decodeURIComponent(document.cookie);
@@ -163,6 +174,7 @@ title: Post a Job
           }
         // JavaScript code
         function postJob() {
+             // get values from user input
             const title = document.getElementById("title").value;
             const company = document.getElementById("company").value;
             const description = document.getElementById("description").value;
@@ -171,8 +183,9 @@ title: Post a Job
             const field = document.getElementById("field").value;
             const location = document.getElementById("location").value; 
             
+            // calls the getCookie function to get the userid 
             const jobpostee = parseInt(getCookie("userid"))
-
+             // body of request 
             const userData = {
                 title: title,
                 company: company,
@@ -183,34 +196,35 @@ title: Post a Job
                 location: location,
                 jobpostee: jobpostee
             };
-        
+         // prepare request options of request
             const requestOptions = {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
+                method: 'POST', 
+                mode: 'cors', 
+                cache: 'default', 
                 body: JSON.stringify(userData),
-                credentials: 'include', // include, *same-origin, omit
+                credentials: 'include', 
                 headers: {
                   'Content-Type': 'application/json'
-                  // 'Content-Type': 'application/x-www-form-urlencoded',
+                  
                 },
               };
         
          
-            // const url = 'http://127.0.0.1:8064/api/jwt_auth/register';
-            // const url = '://127.0.0.1http:8064/api/users/';
+            // fetch url
             const url = 'http://127.0.0.1:8064/api/job/';
             
+            // fetch that will send user to the jobs page to view their posted job if successful
+            // if not successful, send them to the employer registration page
             fetch(url, requestOptions)
           .then(response => {
-              // Handle server response
+              // handles error from backend 
               if (response.status !== 200) {
                   const errorMsg = 'Database response error: ' + response.status;
                   console.log(errorMsg);
                   window.location.href = '{{site.baseurl}}/jobauth';
               }
   
-              // Response contains valid result
+              
               response.json().then(data => {
                   if (data !== null) {
                     
@@ -220,7 +234,7 @@ title: Post a Job
               });
           })
           .catch(error => {
-              // Handle fetch errors
+              // handles error from fetch
               console.error('Fetch error:', error);
           });
         }

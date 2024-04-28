@@ -8,9 +8,9 @@ if (location.hostname === "localhost") {
 }
 
 export const options = {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
-    cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
+    method: 'POST', 
+    mode: 'cors', 
+    cache: 'default', 
     headers: {
         'Content-Type': 'application/json',
     },
