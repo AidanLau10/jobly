@@ -40,7 +40,7 @@ permalink: /applyjob/
             <td><label for="qualification">Qualification</label></td>
             <td>
                <select id="qualification">
-                  <option value="PhD">Bachelors</option>
+                  <option value="PhD">PhD</option>
                   <option value="Masters">Masters</option>
                   <option value="Bachelors">Bachelors</option>
                   <option value="Associates">Associates</option>
@@ -48,6 +48,10 @@ permalink: /applyjob/
             </td>
          </tr>
          <tr>
+         <tr>
+            <td><label for ="years_of_experience">Years of Coding Experience</label></td>
+            <td><textarea id="years_of_experience" name="years_of_experience" required></textarea></td>
+         </tr>
             <td><label for="separationFactor">What separates you from others?</label></td>
             <td><textarea id="separationFactor" name="separationFactor" required></textarea></td>
          </tr>
@@ -125,8 +129,9 @@ permalink: /applyjob/
       // get values from user input
       const address = document.getElementById('address').value;
       const email = document.getElementById('email').value;
+      const qualification = document.getElementById('qualification').value;
       const separationFactor = document.getElementById('separationFactor').value;
-      
+      const years_of_experience = document.getElementById("years_of_experience").value;
       // call the getCookie function to get the userid
       userid = getCookie("userid");
         
@@ -134,7 +139,9 @@ permalink: /applyjob/
         const applicationDetails = {
             address: address,
             email: email,
-            separationFactor: separationFactor
+            qualification: qualification,
+            separationFactor: separationFactor,
+            years_of_experience: years_of_experience
         };
         
          // prepare request options of request

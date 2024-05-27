@@ -1,3 +1,8 @@
+---
+layout: base
+permalink: /applicants/
+---
+
 <style>
 /* all css is made by ChatGPT */
   .card {
@@ -65,7 +70,8 @@
 </head>
 <body>
   <h1>Here is a list of the applicants that have applied to the job you posted.</h1>
-  <p>You can look at the details of their application and also filter by a preferrred qualifcation.</p>
+  <p>You can look at the details of their application and also filter by their experience</p>
+  <!-- <p>You can look at the details of their application and also filter by a preferrred qualifcation.</p>
   <label for="qualification">Filter by Qualification:</label>
   <select id="qualification">
      <option value=""></option>
@@ -74,11 +80,13 @@
      <option value="Bachelors">Bachelors</option>
      <option value="Associates">Associates</option>
   </select>
-  <button onClick="filterQualification()">Filter</button>
+  <button onClick="filterQualification()">Filter</button> -->
+  <button onClick="filterExperience()">Filter By Experience</button>
   <table>
      <thead>
         <tr>
            <th>Name</th>
+           <th>Years of Experience</th>
            <th>View Application</th>
         </tr>
      </thead>
@@ -123,9 +131,9 @@
                const tr = document.createElement("tr");
                tr.innerHTML = `
              
-                   <td>${row.name}</td>
-      
-                   <td><a href="/joblyFrontend/viewapplication?userid=${row.id}&jobid=${jobid}">View Application</a></td>
+                   <td>${row.user.name}</td>
+                   <td>${row.application.years_of_experience}</td>
+                   <td><a href="/joblyFrontend/viewapplication?userid=${row.user.id}&jobid=${jobid}">View Application</a></td>
                   
                `;
                resultContainer.appendChild(tr);
@@ -138,7 +146,63 @@
       
        });
      
-     
+       function filterExperience() {
+        // get results and clear the table before fetching
+        const resultContainer = document.getElementById("results");
+        resultContainer.innerHTML = '';
+        
+        // get the job id in the url parameter
+        let urlParams = new URLSearchParams(window.location.search);
+        let jobid = urlParams.get('jobid'); 
+        // get the value of the qualification filter
+        
+        
+        // fetch url
+        const filterApplicationUrl = 'http://127.0.0.1:8064/api/job/applicationSortingAlgorithm?id=' + jobid;
+        // prepare request options of request
+        const filterApplicationHeaders = {
+          method: 'GET', 
+          mode: 'cors',
+          cache: 'default', 
+         
+          headers: {
+            'Content-Type': 'application/json'
+            
+          },
+        };
+        // fetch that returns applicants that match the qualification
+        fetch(displayApplicantsUrl, displayApplicantsHeaders)
+        
+          .then(response => {
+            console.log(response)
+            // handles error from backend 
+            if (response.status !== 200) {
+              const errorMsg = 'Database response error: ' + response.status;
+              console.log(errorMsg);
+      
+            }
+            // convert response to json
+            response.json().then(data => {
+          
+              data.forEach(row => {
+                  const tr = document.createElement("tr");
+                  tr.innerHTML = `
+                  
+                  <td>${row.user.name}</td>
+                  <td>${row.application.years_of_experience}</td>
+                  <td><a href="/joblyFrontend/viewapplication?userid=${row.user.id}&jobid=${jobid}">View Application</a></td>
+                     
+                  `;
+                  resultContainer.appendChild(tr);
+              });
+            });
+          })
+          .catch(err => {
+            // handles error from backend
+            console.error(err);
+         
+          });
+      }
      
        function filterQualification() {
          // get results and clear the table before fetching

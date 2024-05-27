@@ -30,7 +30,9 @@ layout: base
 
 
 <div class="container" style="background-color: rgb(15, 7, 86); padding: 20px; border-radius: 5px;">
+    
     <table>
+        
         <tr>
             <th colspan="2"><h2>Login</h2></th>
         </tr>
@@ -46,22 +48,22 @@ layout: base
             <td colspan="2"><button onclick="login_User()">Login</button></td>
         </tr>
     </table>
-
+</div>
 
 
     <script>
         function login_User() {
-            // Extract data from inputs
+            // get values of input fields 
             const uid = document.getElementById("uid").value;
             const password = document.getElementById("password").value;
         
-            // Prepare data for POST request
+            // body of request
             const userData = {
                 uid: uid,
                 password: password
             };
         
-            // Prepare request options
+            // request options 
             const requestOptions = {
                 method: 'POST',
                 headers: new Headers({'content-type': 'application/json'}),
@@ -70,10 +72,10 @@ layout: base
                 credentials: 'include'
             };
         
-            // URL for Create API
+            // fetch url
             const url = 'http://127.0.0.1:8064/api/users/authenticate';
-           //const url = 'http://127.0.0.1:8064/api/users/authenticate';
-            // Async fetch API call to the database to create a new user
+          
+            // fetch that will either redirect user to their profile if successful or an error page if unsuccessful
             fetch(url, requestOptions)
                 .then(response => {
                     // handles error from backend 

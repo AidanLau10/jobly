@@ -162,6 +162,7 @@ function renderJobDetails(data) {
                  <p class="card-text"><strong>Email:</strong> <input type="text" id="email" value="${data.email}" /></p>
                  <p class="card-text"><strong>Address:</strong> <input type="text" id="address" value="${data.address}" /></p>
                  <p class="card-text"><strong>Qualification:</strong> <input type="text" id="qualification" value="${data.qualification}" /></p>
+                 <p class="card-text"><strong>Years of Experience:</strong> <input type="text" id="years_of_experience" value="${data.years_of_experience}" /></p>
                  <p class="card-text"><strong>What separates you from others?</strong> <textarea id="separationFactor">${data.separationFactor}</textarea></p>
                  <button onclick="editApplication()" class="btn btn-primary">Save Changes</button>
              `;
@@ -180,6 +181,7 @@ function renderJobDetails(data) {
                  
                  const address = document.getElementById("address").value;
                  const separationFactor = document.getElementById("separationFactor").value;
+                 const years_of_experience = document.getElementById("years_of_experience").value;
               
                  
               
@@ -187,7 +189,8 @@ function renderJobDetails(data) {
                  const userData = {
                      email: email,
                      address: address,
-                     separationFactor: separationFactor
+                     separationFactor: separationFactor,
+                     years_of_experience: years_of_experience
               
                  };
              // prepare request options of request
